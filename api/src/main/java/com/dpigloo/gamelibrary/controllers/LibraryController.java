@@ -58,18 +58,10 @@ public class LibraryController {
     public ResponseEntity<String> deleteFromUserLibrary(@RequestParam long gameId,
                                                         @AuthenticationPrincipal User user) {
         String username = user.getUsername();
-        try {
-            LibraryDto libraryDto = libraryService.removeFromUserLibrary(username, gameId);
-            if (libraryDto == null) {
-                return new ResponseEntity<>("Failed to remove game from library", HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-            return new ResponseEntity<>("Successfully removed game to library", HttpStatus.OK);
-        } catch (UserNotFoundException e) {
-            logger.error(e.getMessage());
-            return new ResponseEntity<>("User does not exist", HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (GameNotFoundException e) {
-            logger.error(e.getMessage());
-            return new ResponseEntity<>("Unable to remove game to library", HttpStatus.INTERNAL_SERVER_ERROR);
+        LibraryDto libraryDto = libraryService.removeFromUserLibrary(username, gameId);
+        if (libraryDto == null) {
+            return new ResponseEntity<>("Failed to remove game from library", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        return new ResponseEntity<>("Successfully removed game to library", HttpStatus.OK);
     }
 }

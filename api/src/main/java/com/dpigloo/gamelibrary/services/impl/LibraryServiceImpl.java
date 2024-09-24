@@ -39,10 +39,7 @@ public class LibraryServiceImpl implements LibraryService {
     public List<GameDto> getUserLibrary(String username) {
         logger.info("Current user: {}", username);
         Optional<UserEntity> user = userRepository.findByUsername(username);
-        if (user.isEmpty()) {
-            return null;
-        }
-        return user.get().getUserLibrary().stream().map(this::mapToDto).toList();
+        return user.map(userEntity -> userEntity.getUserLibrary().stream().map(this::mapToDto).toList()).orElse(null);
     }
 
     @Override

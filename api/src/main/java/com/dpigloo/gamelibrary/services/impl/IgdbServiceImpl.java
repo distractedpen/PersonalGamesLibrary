@@ -3,30 +3,25 @@ package com.dpigloo.gamelibrary.services.impl;
 import com.api.igdb.apicalypse.APICalypse;
 import com.api.igdb.exceptions.RequestException;
 import com.api.igdb.request.IGDBWrapper;
-import com.api.igdb.request.JsonRequestKt;
 import com.api.igdb.request.ProtoRequestKt;
 import com.api.igdb.request.TwitchAuthenticator;
 import com.api.igdb.utils.TwitchToken;
 import com.dpigloo.gamelibrary.GameLibraryConfigurationProperties;
 import com.dpigloo.gamelibrary.dto.GameDto;
 import com.dpigloo.gamelibrary.services.IgdbService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.Game;
 import proto.Search;
-import proto.SearchResult;
 
 import java.util.List;
 
 @Service
 public class IgdbServiceImpl implements IgdbService {
 
-    private IGDBWrapper wrapper;
-    private Logger logger;
+    private final IGDBWrapper wrapper;
+    private final Logger logger;
 
 
     public IgdbServiceImpl(GameLibraryConfigurationProperties configProperties) {
@@ -42,7 +37,7 @@ public class IgdbServiceImpl implements IgdbService {
     }
 
     @Override
-    public List<GameDto> searchGameByName(String game, int offset, int limit) throws RequestException {
+    public List<GameDto> searchGameByName(String game, int offset, int limit) {
         APICalypse apiCalypse = new APICalypse().search(game).fields("game, name").offset(offset).limit(limit);
         logger.info("apiCalypse request: {}", apiCalypse.buildQuery());
         try {

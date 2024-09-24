@@ -54,7 +54,11 @@ public class AuthController {
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
         user.setEmail(registerDto.getEmail());
 
-        Role role = roleRepository.findByName("USER").get();
+        Optional<Role> roleOptional = roleRepository.findByName("USER");
+        if (roleOptional.isEmpty()) {
+            return new ResponseEntity<>("Role not found", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        Role role =roleOptional.get();
         user.setRoles(Collections.singletonList(role));
 
         userRepository.save(user);
