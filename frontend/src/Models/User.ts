@@ -2,6 +2,7 @@
     username: string;
     email: string;
     token: string;
+    tokenType: string;
 }
 
 export type UserProfile = {

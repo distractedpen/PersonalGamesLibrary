@@ -42,10 +42,12 @@ public class IgdbServiceImpl implements IgdbService {
     }
 
     @Override
-    public List<GameDto> searchGameByName(String game) throws RequestException {
-        APICalypse apiCalypse = new APICalypse().search(game).fields("game, name");
+    public List<GameDto> searchGameByName(String game, int offset, int limit) throws RequestException {
+        APICalypse apiCalypse = new APICalypse().search(game).fields("game, name").offset(offset).limit(limit);
+        logger.info("apiCalypse request: {}", apiCalypse.buildQuery());
         try {
             List<Search> searchResults = ProtoRequestKt.search(wrapper, apiCalypse);
+            logger.info("search results: {}", searchResults.size());
             return searchResults.stream().map(result -> mapResultToGameDto(result)).toList();
         } catch (RequestException e) {
             logger.error(e.getMessage());

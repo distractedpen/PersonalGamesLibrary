@@ -19,19 +19,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.Collections;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private AuthenticationManager authenticationManager;
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private PasswordEncoder passwordEncoder;
-    private JwtTokenGenerator jwtTokenGenerator;
+    private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtTokenGenerator jwtTokenGenerator;
 
     public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository,
                           RoleRepository roleRepository, PasswordEncoder passwordEncoder,
@@ -52,6 +52,7 @@ public class AuthController {
         UserEntity user = new UserEntity();
         user.setUsername(registerDto.getUsername());
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+        user.setEmail(registerDto.getEmail());
 
         Role role = roleRepository.findByName("USER").get();
         user.setRoles(Collections.singletonList(role));
@@ -69,7 +70,19 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String token = jwtTokenGenerator.generateToken(authentication);
-        return new ResponseEntity<>(new AuthResponseDto(token), HttpStatus.OK);
+
+        Optional<UserEntity> user = userRepository.findByUsername(loginDto.getUsername());
+        if (user.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        UserEntity userEntity = user.get();
+        AuthResponseDto authResponseDto = new AuthResponseDto();
+        authResponseDto.setToken(token);
+        authResponseDto.setUsername(userEntity.getUsername());
+        authResponseDto.setEmail(userEntity.getEmail());
+
+        return new ResponseEntity<>(authResponseDto, HttpStatus.OK);
     }
 
 }

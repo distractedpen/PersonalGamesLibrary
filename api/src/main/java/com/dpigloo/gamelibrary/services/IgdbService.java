@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface IgdbService {
 
-    List<GameDto> searchGameByName(String game) throws RequestException;
+    List<GameDto> searchGameByName(String game, int offset, int limit) throws RequestException;
     GameDto getGameById(long id) throws RequestException;
 }

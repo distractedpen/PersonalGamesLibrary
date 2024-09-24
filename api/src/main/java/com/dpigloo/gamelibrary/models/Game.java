@@ -4,18 +4,26 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "Games")
+@ToString
 public class Game {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String cover;
+
+
+    @ManyToMany(mappedBy = "library")
+    private List<UserEntity> users = new ArrayList<>();
+
 }

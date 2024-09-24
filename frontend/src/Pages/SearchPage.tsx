@@ -46,7 +46,7 @@ const SearchPage = () => {
     async function addToLibrary(e: FormEvent) {
         e.preventDefault();
         libraryPostApi(e.target[0].value).then((res) => {
-            if (res?.status == 204) {
+            if (res?.status == 200) {
                 console.log("successfully added");
             } else {
                 console.log("Error in Adding game");

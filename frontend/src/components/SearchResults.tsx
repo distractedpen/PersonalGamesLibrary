@@ -14,6 +14,7 @@ const SearchResults = ({ gameList, offset, getNextPage, getPreviousPage, addToLi
     return (
         <div className={"space-y-4"}>
             {gameList.map((game) => {
+                if (game.id === 0) return;
                 return (
                     <ResultsTile key={game.id} game={game} addToLibrary={addToLibrary}/>
                 );

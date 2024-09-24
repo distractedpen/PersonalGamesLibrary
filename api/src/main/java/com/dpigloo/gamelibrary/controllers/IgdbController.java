@@ -26,9 +26,12 @@ public class IgdbController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<GameDto>> search(@RequestParam String name) {
+    public ResponseEntity<List<GameDto>> search(@RequestParam String gameName,
+                                                @RequestParam(defaultValue = "0") int offset,
+                                                @RequestParam(defaultValue = "10") int limit) {
         try {
-            List<GameDto> results = igdbService.searchGameByName(name);
+            logger.info("SEARCHING: {} {} {}", gameName, offset, limit);
+            List<GameDto> results = igdbService.searchGameByName(gameName, offset, limit);
             if (results == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -39,10 +42,10 @@ public class IgdbController {
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<GameDto> getGameById(@PathVariable long id) {
+    @GetMapping("/{gameId}")
+    public ResponseEntity<GameDto> getGameById(@PathVariable long gameId) {
         try {
-            GameDto result = igdbService.getGameById(id);
+            GameDto result = igdbService.getGameById(gameId);
             if (result == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }

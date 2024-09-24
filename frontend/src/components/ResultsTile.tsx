@@ -7,6 +7,7 @@ interface Props {
 }
 
 const ResultsTile = ({ game, addToLibrary }: Props) => {
+    console.log(game);
     return (
         <div className={"flex flex-col justify-evenly border-2 border-dashed border-black"} key={game.id}>
             <form onSubmit={addToLibrary}>
