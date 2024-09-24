@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 import {useAuth} from "../Context/useAuth.tsx";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
+import {Link} from "react-router-dom";
 
 type RegisterFormInputs = {
     userName: string;
@@ -24,35 +25,37 @@ export default function RegisterPage() {
     }
 
     return (
-        <div className="flex flex-col h-screen w-screen items-center justify-center  bg-[#DFDFDF]">
-            <p className={"flex items-center mb-6 text-2xl font-semibold"}>Game Library Thing</p>
-            <div className={"bg-gray-500 rounded-2xl"}>
-                <div className={"p-6 space-y-6"}>
-                    <h1 className={"text-xl font-bold text-center"}>
-                        Sign Up
-                    </h1>
-                    <form className={"space-y-6 flex flex-col items-center"} onSubmit={handleSubmit(handleLogin)}>
-                        <div>
-                            <input type={"text"} className={"rounded-md border-solid border-black border"}
-                                   placeholder={"Username"} {...register("userName")} />
-                            {errors.userName ? <p className={"text-red-500"}>{errors.userName.message}</p> : ""}
-                        </div>
-                        <div>
-                            <input type={"text"} className={"rounded-md border-solid border-black border"}
-                                   placeholder={"Email"} {...register("email")} />
-                            {errors.email ? <p className={"text-red-500"}>{errors.email.message}</p> : ""}
-                        </div>
-                        <div>
-                            <input type={"password"} className={"rounded-md border-solid border-black border"}
-                                   placeholder={"Password"} {...register("password")} />
-                            {errors.password ? <p className={"text-red-500"}>{errors.password.message}</p> : ""}
-                        </div>
-                        <button type="submit"
-                                className="w-full h-1/12 rounded-md bg-lavender_(web)">
-                            Sign Up
+        <div className="flex flex-col h-screen w-screen items-center justify-center space-y-5 bg-gray-700">
+            <h1 className={"text-4xl text-white font-bold"}>Personal Game Library</h1>
+            <div className={"bg-gray-800 p-6 space-y-6"}>
+                <h1 className={"text-xl text-white font-bold text-center"}>
+                    Sign Up
+                </h1>
+                <form className={"space-y-6 flex flex-col items-center"} onSubmit={handleSubmit(handleLogin)}>
+                    <div>
+                        <input type={"text"} className={"p-1"}
+                               placeholder={"Username"} {...register("userName")} />
+                        {errors.userName ? <p className={"text-red-500"}>{errors.userName.message}</p> : ""}
+                    </div>
+                    <div>
+                        <input type={"text"} className={"p-1"}
+                               placeholder={"Email"} {...register("email")} />
+                        {errors.email ? <p className={"text-red-500"}>{errors.email.message}</p> : ""}
+                    </div>
+                    <div>
+                        <input type={"password"} className={"p-1"}
+                               placeholder={"Password"} {...register("password")} />
+                        {errors.password ? <p className={"text-red-500"}>{errors.password.message}</p> : ""}
+                    </div>
+                    <div className={"space-x-5"}>
+                        <button type="submit" className="p-4 bg-green-700 text-white text-2xl">
+                            Register
                         </button>
-                    </form>
-                </div>
+                        <Link to={"/login"} className={"p-4 bg-green-700 text-white text-2xl"}>
+                            Login
+                        </Link>
+                    </div>
+                </form>
             </div>
         </div>
     )

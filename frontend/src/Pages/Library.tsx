@@ -4,7 +4,6 @@ import {useAuth} from "../Context/useAuth.tsx";
 import {libraryDelete, libraryGetApi} from "../Services/LibraryService.tsx";
 import {LibraryGet} from "../Models/Library.ts";
 import Header from "../components/Header.tsx";
-import {Link} from "react-router-dom";
 
 export default function Library() {
 
@@ -44,9 +43,8 @@ export default function Library() {
     }
 
     return (
-        <div className="flex flex-col h-screen w-screen items-center justify-center bg-[#DFDFDF]">
+        <div className="flex flex-col h-screen w-screen items-center justify-center bg-gray-800">
             <Header user={user} handleLogout={logout}/>
-            <Link className={"underline"} to={"/search"}>Add Game</Link>
             <CardContainer
                 gameList={gameList!}
                 onGameDelete={onGameDelete}

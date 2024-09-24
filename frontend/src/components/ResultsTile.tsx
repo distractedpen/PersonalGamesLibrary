@@ -9,11 +9,11 @@ interface Props {
 const ResultsTile = ({ game, addToLibrary }: Props) => {
     console.log(game);
     return (
-        <div className={"flex flex-col justify-evenly border-2 border-dashed border-black"} key={game.id}>
+        <div className={"m-6 bg-gray-500 h-60 w-40"} key={game.id}>
             <form onSubmit={addToLibrary}>
                 <h1>{game.name}</h1>
                 <input hidden={true} value={game.id} readOnly={true}/>
-                <button className={"bg-gray-500 text-lg"} type={"submit"}>+</button>
+                <button className={"bg-green-700 text-lg text-white"} type={"submit"}>+</button>
             </form>
         </div>
     )

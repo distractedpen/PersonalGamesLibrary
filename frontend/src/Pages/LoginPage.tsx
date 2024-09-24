@@ -23,32 +23,30 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="flex flex-col h-screen w-screen items-center justify-center  bg-[#DFDFDF]">
-            <p className={"flex items-center mb-6 text-2xl font-semibold"}>Game Library Thing</p>
-            <div className={"bg-gray-500 rounded-2xl"}>
-                <div className={"p-6 space-y-6"}>
-                    <h1 className={"text-xl font-bold text-center"}>
+        <div className="flex flex-col h-screen w-screen items-center justify-center space-y-5 bg-gray-700">
+            <h1 className={"text-4xl text-white font-bold"}>Personal Game Library</h1>
+            <div className={"bg-gray-800 p-6 space-y-6"}>
+                <h1 className={"text-2xl text-white font-bold text-center"}>
+                    Login
+                </h1>
+                <form className={"space-y-6 flex flex-col items-center"} onSubmit={handleSubmit(handleLogin)}>
+                    <div>
+                        <input type={"text"} className={"p-1"}
+                               placeholder={"Username"} {...register("userName")} />
+                        {errors.userName ? <p className={"text-red-500"}>{errors.userName.message}</p> : ""}
+                    </div>
+                    <div>
+                        <input type={"password"} className={"p-1"}
+                               placeholder={"Password"} {...register("password")} />
+                        {errors.password ? <p className={"text-red-500"}>{errors.password.message}</p> : ""}
+                    </div>
+                    <button type="submit" className="w-full bg-green-700 text-white">
                         Login
-                    </h1>
-                    <form className={"space-y-6 flex flex-col items-center"} onSubmit={handleSubmit(handleLogin)}>
-                        <div>
-                            <input type={"text"} className={"rounded-md border-solid border-black border"}
-                                   placeholder={"Username"} {...register("userName")} />
-                            {errors.userName ? <p className={"text-red-500"}>{errors.userName.message}</p> : ""}
-                        </div>
-                        <div>
-                            <input type={"password"} className={"rounded-md border-solid border-black border"}
-                                   placeholder={"Password"} {...register("password")} />
-                            {errors.password ? <p className={"text-red-500"}>{errors.password.message}</p> : ""}
-                        </div>
-                        <button type="submit"
-                                className="w-full h-1/12 rounded-md bg-lavender_(web)">Sign
-                            In
-                        </button>
-                        <p>Don't have an account? <Link to="/register" className={"text-blue-900 underline"}>Sign Up</Link></p>
-                    </form>
-                </div>
+                    </button>
+                    <p className={"text-white"}>Don't have an account? <Link to="/register" className={"text-white underline"}>Sign
+                        Up</Link></p>
+                </form>
             </div>
-        </div>
-    )
+    </div>
+)
 }

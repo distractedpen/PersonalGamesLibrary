@@ -7,10 +7,10 @@ interface Props {
 
 const Header = ({user, handleLogout}: Props) => {
     return (
-        <div className="flex justify-evenly items-center w-5/6">
-            <h1 className="text-4xl flex-init w-2/3">{user?.userName}'s Library</h1>
+        <div className="flex justify-around items-center w-5/6">
+            <h1 className="text-4xl text-white">{user?.userName}'s Library</h1>
             <button onClick={handleLogout}
-                className="flex justify-center items-center text-2xl rounded-2xl  bg-lavender_(web) shadow-black drop-shadow w-40 h-20">
+                className="text-white bg-green-700 p-2">
                 Logout
             </button>
         </div>

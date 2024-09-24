@@ -57,18 +57,18 @@ const SearchPage = () => {
     }
 
     return (
-        <div>
-            <div className={"flex space-x-4"}>
+        <div className={"bg-gray-800 w-screen h-screen"}>
+            <div className={"flex flex-col space-y-4"}>
                 <Search handleOnClick={handleClick} handleOnChange={handleOnSearchTextChange} searchText={searchText} />
-                <Link className="underline" to={"/library"}>Return to Library</Link>
+                <Link className={"bg-green-700 text-2xl text-white w-fit p-2 self-center"} to={"/library"}>Return to Library</Link>
+                <SearchResults
+                    gameList={gameList}
+                    offset={offset}
+                    getNextPage={getNextPage}
+                    getPreviousPage={getPreviousPage}
+                    addToLibrary={addToLibrary}
+                />
             </div>
-            <SearchResults
-                gameList={gameList}
-                offset={offset}
-                getNextPage={getNextPage}
-                getPreviousPage={getPreviousPage}
-                addToLibrary={addToLibrary}
-            />
         </div>
     )
 }
