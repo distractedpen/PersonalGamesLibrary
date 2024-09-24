@@ -4,6 +4,7 @@ import {useAuth} from "../Context/useAuth.tsx";
 import {libraryDelete, libraryGetApi} from "../Services/LibraryService.tsx";
 import {LibraryGet} from "../Models/Library.ts";
 import Header from "../components/Header.tsx";
+import {toast} from "react-toastify";
 
 export default function Library() {
 
@@ -19,7 +20,7 @@ export default function Library() {
                 setGameList([]);
             }
         }).catch((error) => {
-            console.log(error);
+            toast.error(error.message);
         });
     }
 
@@ -32,10 +33,10 @@ export default function Library() {
         e.preventDefault();
         libraryDelete(e.target[0].value).then((res) => {
             if (res?.status == 200) {
-                console.log("successfully deleted");
+                toast.success("Successfully deleted");
                 getLibrary();
             } else {
-                console.log("Error in Deleting game");
+                toast.error("Error in Delete game");
             }
         }).catch((error) => {
             console.log(error);

@@ -5,6 +5,7 @@ import Search from "../components/Search.tsx";
 import SearchResults from "../components/SearchResults.tsx";
 import {libraryPostApi} from "../Services/LibraryService.tsx";
 import {Link} from "react-router-dom";
+import { toast } from "react-toastify";
 
 const SearchPage = () => {
     const [gameList, setGameList] = useState<IgdbGame[]>([]);
@@ -21,7 +22,7 @@ const SearchPage = () => {
         if (result)
             setGameList(result);
         else
-            console.log("Error from Igdb Search");
+            toast.error("Error from Igdb Search");
 
     }
 
@@ -31,7 +32,7 @@ const SearchPage = () => {
         if (result)
             setGameList(result);
         else
-            console.log("Error from Igdb Search");
+            toast.error("Error from Igdb Search");
     }
 
 
@@ -40,16 +41,16 @@ const SearchPage = () => {
          if (result)
              setGameList(result);
          else
-             console.log("Error from Igdb Search");
+             toast.error("Error from Igdb Search");
     }
 
     async function addToLibrary(e: FormEvent) {
         e.preventDefault();
         libraryPostApi(e.target[0].value).then((res) => {
             if (res?.status == 200) {
-                console.log("successfully added");
+                toast.success("Successfully added");
             } else {
-                console.log("Error in Adding game");
+                toast.error("Error in Adding game");
             }
         }).catch((error) => {
             console.log(error);
