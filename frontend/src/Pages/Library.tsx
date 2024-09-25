@@ -44,7 +44,7 @@ export default function Library() {
     }
 
     return (
-        <div className="flex flex-col h-screen w-screen items-center justify-center bg-gray-800">
+        <div className="flex flex-col h-screen w-screen items-center justify-center">
             <Header user={user} handleLogout={logout}/>
             <CardContainer
                 gameList={gameList!}

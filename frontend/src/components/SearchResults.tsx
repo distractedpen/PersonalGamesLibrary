@@ -1,24 +1,29 @@
 ﻿import {SyntheticEvent} from 'react'
-import {IgdbGame} from "../Models/Igdb.ts";
 import ResultsTile from "./ResultsTile.tsx";
+import {LibraryGet} from "../Models/Library.ts";
 
 interface Props {
-    gameList: IgdbGame[];
+    gameList: LibraryGet[];
+    currentLibrary: LibraryGet[];
     offset: number;
     getNextPage: (e: SyntheticEvent) => void;
     getPreviousPage: (e: SyntheticEvent) => void;
     addToLibrary: (e: SyntheticEvent) => void;
 }
 
-const SearchResults = ({ gameList, offset, getNextPage, getPreviousPage, addToLibrary }: Props) => {
+const SearchResults = ({ gameList, currentLibrary, offset, getNextPage, getPreviousPage, addToLibrary }: Props) => {
+    console.log("SearchResult")
+    console.log(currentLibrary);
     return (
         <div className={"space-y-4"}>
             <div className={"space-x-4"}>
                 <div className={"flex justify-evenly"}>
-                    <button className={"bg-green-700 text-white text-2xl p-2"} onClick={(e) => getPreviousPage(e)} disabled={offset == 0}>
+                    <button className={"bg-green-700 text-white text-2xl p-2 disabled:text-gray-400 hover:bg-green-800"}
+                            onClick={(e) => getPreviousPage(e)} disabled={offset == 0}>
                         Previous Page
                     </button>
-                    <button className={"bg-green-700 text-white text-2xl p-2"} onClick={(e) => getNextPage(e)} disabled={gameList.length < 10}>
+                    <button className={"bg-green-700 text-white text-2xl p-2 disabled:text-gray-400 hover:bg-green-800"}
+                            onClick={(e) => getNextPage(e)} disabled={gameList.length < 10}>
                         Next Page
                     </button>
                 </div>
@@ -28,7 +33,11 @@ const SearchResults = ({ gameList, offset, getNextPage, getPreviousPage, addToLi
                     gameList.map((game) => {
                         if (game.id === 0) return;
                         return (
-                            <ResultsTile key={game.id} game={game} addToLibrary={addToLibrary}/>
+                            <ResultsTile
+                                key={game.id}
+                                game={game}
+                                addToLibrary={addToLibrary}
+                                inLibrary={currentLibrary.some((libGame) => libGame.id === game.id)}/>
                         )
                     })
                     :

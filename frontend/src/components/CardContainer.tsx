@@ -9,16 +9,17 @@ interface Props {
 }
 
 export default function CardContainer({ gameList, onGameDelete } : Props) {
+    console.log(gameList);
     return(
         <>
-            <div className="container bg-magnolia justify-center w-5/6 h-5/6 flex flex-row flex-wrap overflow-auto m-2 p-6">
+            <div className="container space-x-4 sm:space-y-4 bg-magnolia justify-center w-5/6 h-5/6 flex flex-row flex-wrap overflow-auto m-2 p-6">
                 {gameList.map((game) => {
                     return (
                         <GameCard key={game.id} game={game} onGameDelete={onGameDelete}/>
                     );
                 })}
             </div>
-            <Link className={"bg-green-700 text-xl text-white p-2"} to={"/search"}>Add Game</Link>
+            <Link className={"bg-green-700 text-xl text-white p-2 hover:bg-green-800"} to={"/search"}>Add Game</Link>
         </>
     )
 }

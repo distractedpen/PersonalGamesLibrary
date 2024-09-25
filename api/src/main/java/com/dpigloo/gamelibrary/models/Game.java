@@ -19,7 +19,7 @@ public class Game {
     @Id
     private long id;
     private String name;
-    private String cover;
+    private String coverUrl;
 
 
     @ManyToMany(mappedBy = "library")

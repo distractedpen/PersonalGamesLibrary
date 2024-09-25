@@ -1,16 +1,33 @@
-﻿import {ChangeEvent, FormEvent, SyntheticEvent, useState} from 'react'
-import {IgdbGame} from "../Models/Igdb.ts";
+﻿import React, {ChangeEvent, FormEvent, SyntheticEvent, useState} from 'react'
 import {searchIgdb} from "../Services/IgdbService.tsx";
 import Search from "../components/Search.tsx";
 import SearchResults from "../components/SearchResults.tsx";
-import {libraryPostApi} from "../Services/LibraryService.tsx";
+import {libraryGetApi, libraryPostApi} from "../Services/LibraryService.tsx";
 import {Link} from "react-router-dom";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
+import {LibraryGet} from "../Models/Library.ts";
 
 const SearchPage = () => {
-    const [gameList, setGameList] = useState<IgdbGame[]>([]);
+    const [gameList, setGameList] = useState<LibraryGet[]>([]);
     const [searchText, setSearchText] = useState<string>("");
     const [offset, setOffset] = useState(0);
+    const [currentLibrary, setCurrentLibrary] = useState<LibraryGet[]>([]);
+
+    function getLibrary() {
+        libraryGetApi().then((res) => {
+            if (res?.data)
+                setCurrentLibrary(res.data);
+            else {
+                setCurrentLibrary([]);
+            }
+        }).catch((error) => {
+            toast.error(error.message);
+        });
+    }
+
+    React.useEffect(() => {
+        getLibrary();
+    }, []);
 
     function handleOnSearchTextChange(e: ChangeEvent<HTMLInputElement>) {
         setSearchText(e.target.value);
@@ -37,11 +54,23 @@ const SearchPage = () => {
 
 
     async function handleClick(e: SyntheticEvent) {
-         const result = await searchIgdb(searchText, offset);
-         if (result)
-             setGameList(result);
-         else
-             toast.error("Error from Igdb Search");
+        let result = await searchIgdb(searchText, offset);
+        if (result) {
+            // remove all gameId == 0
+            result = result.filter((game) => game.id !== 0);
+            console.log(currentLibrary);
+            result = result.map((game) => {
+                let inLib = false;
+                currentLibrary.forEach(libGame => {
+                    if (game.id == libGame.id)
+                        inLib = true;
+                });
+                game.inLibrary = inLib;
+                return game;
+            });
+            setGameList(result);
+        } else
+            toast.error("Error from Igdb Search");
     }
 
     async function addToLibrary(e: FormEvent) {
@@ -49,6 +78,7 @@ const SearchPage = () => {
         libraryPostApi(e.target[0].value).then((res) => {
             if (res?.status == 200) {
                 toast.success("Successfully added");
+                getLibrary();
             } else {
                 toast.error("Error in Adding game");
             }
@@ -58,12 +88,14 @@ const SearchPage = () => {
     }
 
     return (
-        <div className={"bg-gray-800 w-screen h-screen"}>
+        <div className={"w-screen h-screen min-h-fit min-w-fit"}>
             <div className={"flex flex-col space-y-4"}>
-                <Search handleOnClick={handleClick} handleOnChange={handleOnSearchTextChange} searchText={searchText} />
-                <Link className={"bg-green-700 text-2xl text-white w-fit p-2 self-center"} to={"/library"}>Return to Library</Link>
+                <Search handleOnClick={handleClick} handleOnChange={handleOnSearchTextChange} searchText={searchText}/>
+                <Link className={"bg-green-700 text-2xl text-white w-fit p-2 self-center hover:bg-green-800"}
+                      to={"/library"}>Return to Library</Link>
                 <SearchResults
                     gameList={gameList}
+                    currentLibrary={currentLibrary}
                     offset={offset}
                     getNextPage={getNextPage}
                     getPreviousPage={getPreviousPage}

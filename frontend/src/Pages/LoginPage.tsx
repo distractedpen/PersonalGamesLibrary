@@ -23,7 +23,7 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="flex flex-col h-screen w-screen items-center justify-center space-y-5 bg-gray-700">
+        <div className="flex flex-col h-screen w-screen items-center justify-center space-y-5">
             <h1 className={"text-4xl text-white font-bold"}>Personal Game Library</h1>
             <div className={"bg-gray-800 p-6 space-y-6"}>
                 <h1 className={"text-2xl text-white font-bold text-center"}>
@@ -40,7 +40,7 @@ export default function LoginPage() {
                                placeholder={"Password"} {...register("password")} />
                         {errors.password ? <p className={"text-red-500"}>{errors.password.message}</p> : ""}
                     </div>
-                    <button type="submit" className="w-full bg-green-700 text-white">
+                    <button type="submit" className="w-full bg-green-700 hover:bg-green-800 text-white">
                         Login
                     </button>
                     <p className={"text-white"}>Don't have an account? <Link to="/register" className={"text-white underline"}>Sign

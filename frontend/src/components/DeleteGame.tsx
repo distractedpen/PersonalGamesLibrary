@@ -8,7 +8,8 @@ interface Props {
 
 const DeleteGame = ({game, onGameDelete}: Props) => {
     return (
-        <form onSubmit={onGameDelete} className={"float-right mt-2 mr-2 rounded-2xl h-fit"}>
+        <form onSubmit={onGameDelete}
+              className={"bg-green-700 text-white text-center hover:cursor-pointer hover:bg-green-800"}>
             <input hidden value={game.id} readOnly={true}/>
             <button type={"submit"}>X</button>
         </form>

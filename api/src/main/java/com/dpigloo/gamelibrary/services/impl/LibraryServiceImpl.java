@@ -111,6 +111,7 @@ public class LibraryServiceImpl implements LibraryService {
         GameDto gameDto = new GameDto();
         gameDto.setId(game.getId());
         gameDto.setName(game.getName());
+        gameDto.setCoverUrl(game.getCoverUrl());
         return gameDto;
     }
 
@@ -118,6 +119,7 @@ public class LibraryServiceImpl implements LibraryService {
         Game game = new Game();
         game.setId(gameDto.getId());
         game.setName(gameDto.getName());
+        game.setCoverUrl(gameDto.getCoverUrl());
         return game;
     }
 

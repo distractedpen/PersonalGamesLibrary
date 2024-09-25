@@ -1,13 +1,12 @@
 ﻿import axios from "axios";
-import {IgdbGame} from "../Models/Igdb.ts";
+import {LibraryGet} from "../Models/Library.ts";
 
 const api = "http://localhost:8080/api/";
 
 export const searchIgdb = async (gameName: string, offset: number) => {
     const encodedGameName = encodeURIComponent(gameName);
     try {
-        const response = await axios.get<IgdbGame[]>(api + `igdb/search?gameName=${encodedGameName}&offset=${offset}&limit=10`);
-        console.log(response);
+        const response = await axios.get<LibraryGet[]>(api + `igdb/search?gameName=${encodedGameName}&offset=${offset}&limit=10`);
         return response.data;
     } catch (error) {
         console.log(error);
