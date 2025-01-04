@@ -1,5 +1,5 @@
 import {LibraryGet} from "../Models/Library.ts";
-import GameCard from "./GameCard.tsx";
+import LibraryCardDisplay from "./LibraryCardDisplay.tsx";
 import {SyntheticEvent} from "react";
 import {Link} from "react-router-dom";
 
@@ -15,7 +15,7 @@ export default function CardContainer({ gameList, onGameDelete } : Props) {
             <div className="container space-x-4 sm:space-y-4 bg-magnolia justify-center w-5/6 h-5/6 flex flex-row flex-wrap overflow-auto m-2 p-6">
                 {gameList.map((game) => {
                     return (
-                        <GameCard key={game.id} game={game} onGameDelete={onGameDelete}/>
+                        <LibraryCardDisplay key={game.id} game={game} onGameDelete={onGameDelete}/>
                     );
                 })}
             </div>

@@ -22,9 +22,12 @@ export const router = createBrowserRouter([
                 path: "/library",
                 element: <ProtectedRoute><Library/></ProtectedRoute>,
                 children: [
-                    { path: "game/:game_id", element: <ViewGame/>, },
+                    { path: "game/:gameId", element: <ViewGame/>, },
                 ]
             },
+            {
+                path: "/game/:gameId", element: <ViewGame/>,
+            }
         ],
         errorElement: <ErrorPage/>,
     }
