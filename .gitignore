@@ -1,5 +1,6 @@
 secrets.properties
 node_modules/
+/**/dist/
 
 HELP.md
 target/
