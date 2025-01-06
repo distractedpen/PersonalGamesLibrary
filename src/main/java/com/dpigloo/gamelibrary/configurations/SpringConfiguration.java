@@ -8,7 +8,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 import org.springframework.web.servlet.resource.ResourceResolverChain;
 
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -20,7 +19,7 @@ import static java.util.Objects.nonNull;
 public class SpringConfiguration implements WebMvcConfigurer {
 
   @Override
-  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+  public void addResourceHandlers(@NotNull ResourceHandlerRegistry registry) {
     this.serveDirectory(registry, "/", "classpath:/static/");
   }
 
