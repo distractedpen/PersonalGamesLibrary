@@ -2,6 +2,8 @@
 export type LibraryGet = {
     id: number;
     name: string;
+    developer: string[];
+    genres: string[];
     coverUrl: string;
     inLibrary: boolean;
 }

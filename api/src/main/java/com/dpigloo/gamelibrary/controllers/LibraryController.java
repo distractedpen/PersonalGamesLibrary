@@ -1,10 +1,14 @@
 package com.dpigloo.gamelibrary.controllers;
 
 import com.dpigloo.gamelibrary.dto.GameDto;
+import com.dpigloo.gamelibrary.dto.GameMetadataDto;
 import com.dpigloo.gamelibrary.dto.LibraryDto;
 import com.dpigloo.gamelibrary.exceptions.GameNotFoundException;
 import com.dpigloo.gamelibrary.exceptions.UserNotFoundException;
+import com.dpigloo.gamelibrary.services.GameMetadataService;
 import com.dpigloo.gamelibrary.services.LibraryService;
+import com.dpigloo.gamelibrary.services.UserService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +25,14 @@ import java.util.List;
 public class LibraryController {
 
     private final LibraryService libraryService;
+    private final GameMetadataService gameMetadataService;
+    private final UserService userService;
     private final Logger logger = LoggerFactory.getLogger(LibraryController.class);
     @Autowired
-    public LibraryController(LibraryService libraryService) {
+    public LibraryController(LibraryService libraryService, GameMetadataService gameMetadataService, UserService userService) {
         this.libraryService = libraryService;
+        this.gameMetadataService = gameMetadataService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -44,6 +52,9 @@ public class LibraryController {
             if (libraryDto == null) {
                 return new ResponseEntity<>("This game is already in your library", HttpStatus.INTERNAL_SERVER_ERROR);
             }
+
+
+
             return new ResponseEntity<>("Successfully added game to library", HttpStatus.OK);
         } catch (UserNotFoundException e) {
             logger.error(e.getMessage());

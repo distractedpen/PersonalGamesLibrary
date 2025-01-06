@@ -7,11 +7,17 @@ interface Props {
 }
 
 const DeleteGame = ({game, onGameDelete}: Props) => {
+
+    const testDelete = (e: SyntheticEvent) => {
+        console.log("in Delete Game");
+        onGameDelete(e);
+    }
+
     return (
-        <form onSubmit={onGameDelete}
+        <form onSubmit={(e) => testDelete(e)}
               className={"bg-green-700 text-white text-center hover:cursor-pointer hover:bg-green-800"}>
             <input hidden value={game.id} readOnly={true}/>
-            <button type={"submit"}>X</button>
+            <button className={"w-full"} type={"submit"}>X</button>
         </form>
     )
 }

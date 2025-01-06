@@ -12,3 +12,12 @@ export const searchIgdb = async (gameName: string, offset: number) => {
         console.log(error);
     }
 };
+
+export const getGameById = async (gameId: number) => {
+    try {
+        const response = await axios.get<LibraryGet>(api + `igdb/${gameId}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
