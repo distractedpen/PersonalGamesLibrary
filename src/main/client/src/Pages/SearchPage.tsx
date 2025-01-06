@@ -76,11 +76,9 @@ const SearchPage = () => {
     async function addToLibrary(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const form = e.currentTarget;
-        const formElements = form.elements as typeof form.elements & {
-            gameId: HTMLInputElement
-        }
+        const gameInputElement = form.elements[0] as typeof form.elements & HTMLInputElement;
 
-        libraryPostApi(formElements.gameId.valueAsNumber).then((res) => {
+        libraryPostApi(Number(gameInputElement.value)).then((res) => {
             if (res?.status == 200) {
                 toast.success("Successfully added");
                 getLibrary();

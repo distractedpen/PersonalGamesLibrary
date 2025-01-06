@@ -1,6 +1,6 @@
-secrets.properties
 node_modules/
-/**/dist/
+/src/main/resources/static/
+/src/main/client/node/
 
 HELP.md
 target/
@@ -35,3 +35,4 @@ build/
 
 ### VS Code ###
 .vscode/
+/src/main/client/node/

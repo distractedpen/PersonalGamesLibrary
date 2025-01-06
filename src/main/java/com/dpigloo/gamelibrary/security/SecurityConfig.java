@@ -41,8 +41,12 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                     auth
-                            .requestMatchers("/api/auth/**").permitAll()
-                            .anyRequest().authenticated()
+                            .requestMatchers("/api/auth/").permitAll()
+                            .requestMatchers("/api/library/").authenticated()
+                            .requestMatchers("/api/library/**").authenticated()
+                            .requestMatchers("/api/igdb/**").authenticated()
+                            .requestMatchers("/api/game/**").authenticated()
+                            .anyRequest().permitAll()
                 )
                 .httpBasic(Customizer.withDefaults()); // on http requests
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -70,11 +74,11 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:8003"));
+        corsConfiguration.setAllowedOrigins(List.of("*"));
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
         corsConfiguration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", corsConfiguration);
+        source.registerCorsConfiguration("/api/**", corsConfiguration);
         return source;
     }
 

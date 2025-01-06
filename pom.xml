@@ -85,8 +85,7 @@
                 <!-- Use the latest released version: https://repo1.maven.org/maven2/com/github/eirslett/frontend-maven-plugin/ -->
                 <version>1.15.1</version>
                 <configuration>
-                    <workingDirectory>frontend</workingDirectory>
-                    <installDirectory>target</installDirectory>
+                    <workingDirectory>src/main/client</workingDirectory>
                 </configuration>
                 <executions>
                     <execution>
