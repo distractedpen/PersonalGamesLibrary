@@ -1,17 +1,18 @@
-﻿import {LibraryGet} from "../Models/Library.ts";
-
-interface Props {
-    game: LibraryGet | null;
+﻿interface Props {
+    coverUrl: string | undefined;
+    name: string | undefined;
 }
 
-function GameCard( { game }: Props) {
-    if (game === null) {
-        return;
+function GameCard( { coverUrl, name}: Props) {
+
+    if (!coverUrl || !name) {
+        coverUrl = "";
+        name = "";
     }
 
     return (
         <>
-            <img className={"bg-gray-500 inset-0 z-10"} src={game.coverUrl} alt={game.name} height={374} width={264}/>
+            <img className={"insert-0 z-10"} src={coverUrl} alt={name} height={374} width={264}/>
         </>
     )
 }

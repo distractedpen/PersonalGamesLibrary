@@ -63,36 +63,32 @@ function MetadataForm({gameId}: Props) {
     }
 
     return (
-        <form>
-            <div className={"flex"}>
+        <form className={"flex flex-col"}>
+            <div className={"flex gap-5 ml-5"}>
                 <label>Completed:</label>
                 <input type={"checkbox"} name={"completed"} checked={completed}
                        onChange={(e) => setCompleted(e.target.checked)}/>
-            </div>
-            <div className={"flex"}>
                 <label>Currently Playing:</label>
                 <input type={"checkbox"} name={"currentlyPlaying"} checked={currentlyPlaying}
                        onChange={(e) => setCurrentlyPlaying(e.target.checked)}/>
-            </div>
-            <div>
-                <label>Rating</label>
-                <select className={"text-black"}
+                <label>Rating: </label>
+                <select className={"text-black text-center w-fit"}
                         name={"rating"}
                         value={rating}
                         onChange={(e: any) => setRating(e.target.value)}>
                     {renderRatingOptions()}
                 </select>
             </div>
-            <div>
-                <label>Notes</label>
+            <div className={"flex flex-col ml-5 w-full"}>
+                <label className={""}>Notes:</label>
                 <textarea
-                    className={"text-black"}
+                    className={"text-black h-32 w-full resize-none"}
                     name={"notes"}
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                 />
             </div>
-            <input type={"submit"} onClick={handleGameMetaUpdate} value={"Update"}/>
+            <button className={"bg-green-700 w-full self-start ml-5 mt-2"} type={"submit"} onClick={handleGameMetaUpdate}>Update</button>
         </form>
     )
 }

@@ -1,32 +1,14 @@
 import {LibraryGet} from "../Models/Library.ts";
-import React, {useState} from "react";
-import {getGameById} from "../Services/IgdbService.tsx";
-import {toast} from "react-toastify";
-import GameCard from "./GameCard.tsx";
 
 interface Props {
-    gameId: string | undefined;
+    game: LibraryGet | null;
 }
 
-export default function GameDetails({gameId}: Props) {
+export default function GameDetails({game}: Props) {
 
-    const [game, setGame] = useState<LibraryGet | null>(null);
-
-    function getGameInfo() {
-        getGameById(Number(gameId)).then((res) => {
-            if (res) {
-                setGame(res);
-            } else {
-                toast.error("Game Does not exist.");
-            }
-        }).catch((err) => {
-            toast.error(err);
-        });
+    if (game === null) {
+        return;
     }
-
-    React.useEffect(() => {
-        getGameInfo();
-    }, []);
 
     const renderDeveloperList = (gameDevList: string[] | undefined): string => {
         if (!gameDevList) return "";
@@ -39,11 +21,10 @@ export default function GameDetails({gameId}: Props) {
     }
 
     return (
-        <div>
-            <GameCard game={game}/>
-            <h1>{game?.name}</h1>
-            <p>{renderDeveloperList(game?.developer)}</p>
-            <p>{renderGenreList(game?.genres)}</p>
+        <div className={"flex flex-col justify-center m-5"}>
+            <h1 className={"text-3xl"}>{game?.name}</h1>
+            <p className={"text-xl"}><strong>Developers:</strong> {renderDeveloperList(game?.developer)}</p>
+            <p className={"text-xl"}><strong>Genres:</strong> {renderGenreList(game?.genres)}</p>
         </div>
     )
 }

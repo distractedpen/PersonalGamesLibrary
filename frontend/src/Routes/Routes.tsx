@@ -14,20 +14,16 @@ export const router = createBrowserRouter([
         path: "/",
         element: <App/>,
         children: [
-            { path: "", element: <HomePage/> },
-            { path: "/login", element: <LoginPage/> },
-            { path: "/register", element: <RegisterPage/> },
-            { path: "/search", element: <SearchPage/> },
-            {
-                path: "/library",
-                element: <ProtectedRoute><Library/></ProtectedRoute>,
-                children: [
-                    { path: "game/:gameId", element: <ViewGame/>, },
-                ]
-            },
-            {
-                path: "/game/:gameId", element: <ViewGame/>,
-            }
+            {path: "", element: <HomePage/>},
+            // Auth Routes
+            {path: "/login", element: <LoginPage/>},
+            {path: "/register", element: <RegisterPage/>},
+            // Open Routes?
+            {path: "/search", element: <SearchPage/>},
+            {path: "/game/:gameId", element: <ViewGame/>},
+            // Protected Routes
+            {path: "/library", element: <ProtectedRoute><Library/></ProtectedRoute>},
+            {path: "/library/game/:gameId", element: <ProtectedRoute><ViewGame/></ProtectedRoute>},
         ],
         errorElement: <ErrorPage/>,
     }
