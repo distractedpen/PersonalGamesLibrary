@@ -9,6 +9,7 @@ import com.dpigloo.gamelibrary.models.Game;
 import com.dpigloo.gamelibrary.models.UserEntity;
 import com.dpigloo.gamelibrary.repositories.GameRepository;
 import com.dpigloo.gamelibrary.repositories.UserRepository;
+import com.dpigloo.gamelibrary.services.GameMetadataService;
 import com.dpigloo.gamelibrary.services.IgdbService;
 import com.dpigloo.gamelibrary.services.LibraryService;
 import org.slf4j.Logger;
@@ -25,13 +26,16 @@ public class LibraryServiceImpl implements LibraryService {
     private final UserRepository userRepository;
     private final GameRepository gameRepository;
     private final IgdbService igdbService;
+
+    private final GameMetadataService gameMetadataService;
     private final Logger logger;
 
     @Autowired
-    public LibraryServiceImpl(GameRepository gameRepository, UserRepository userRepository, IgdbService igdbService) {
+    public LibraryServiceImpl(GameRepository gameRepository, UserRepository userRepository, IgdbService igdbService, GameMetadataService gameMetadataService) {
         this.gameRepository = gameRepository;
         this.userRepository = userRepository;
         this.igdbService = igdbService;
+        this.gameMetadataService = gameMetadataService;
         logger = LoggerFactory.getLogger(LibraryServiceImpl.class);
     }
 
@@ -78,6 +82,10 @@ public class LibraryServiceImpl implements LibraryService {
 
         libraryDto.setUser_id(userEntity.getId());
         libraryDto.setGame_id(game.getId());
+
+        // store game metadata object
+        gameMetadataService.createGameMetadata(game.getId(), userEntity.getId());
+
         return libraryDto;
     }
 
@@ -103,6 +111,10 @@ public class LibraryServiceImpl implements LibraryService {
 
         libraryDto.setUser_id(userEntity.getId());
         libraryDto.setGame_id(mapToDto(game.get()).getId());
+
+        // remove game metadata from db
+        gameMetadataService.deleteGameMetadata(gameId, userEntity.getId());
+
         return libraryDto;
     }
 

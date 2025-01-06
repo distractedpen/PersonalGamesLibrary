@@ -31,6 +31,7 @@ export default function Library() {
 
     const onGameDelete = (e: any) => {
         e.preventDefault();
+        console.log("clicked delete")
         libraryDelete(e.target[0].value).then((res) => {
             if (res?.status == 200) {
                 toast.success("Successfully deleted");

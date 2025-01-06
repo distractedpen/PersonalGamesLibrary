@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Service
 public class GameServiceImpl implements GameService {
 
-    private GameRepository gameRepository;
+    private final GameRepository gameRepository;
 
     @Autowired
     public GameServiceImpl(GameRepository gameRepository) {
@@ -40,13 +40,13 @@ public class GameServiceImpl implements GameService {
     @Override
     public List<GameDto> getAllGames() {
         List<Game> games = gameRepository.findAll();
-        return games.stream().map(g -> mapToDto(g)).collect(Collectors.toList());
+        return games.stream().map(this::mapToDto).collect(Collectors.toList());
     }
 
     @Override
     public GameDto getGameById(long id) {
         Optional<Game> game = gameRepository.findById(id);
-        return game.map(g -> mapToDto(g)).orElse(null);
+        return game.map(this::mapToDto).orElse(null);
     }
 
     @Override

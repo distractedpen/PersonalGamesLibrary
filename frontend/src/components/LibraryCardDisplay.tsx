@@ -11,9 +11,14 @@ interface Props {
 
 export default function LibraryCardDisplay({game, onGameDelete}: Props) {
 
+    const testDelete = (e: SyntheticEvent) => {
+        console.log("IN Library Card Display");
+        onGameDelete(e);
+    };
+
     return (
         <div>
-            <DeleteGame game={game} onGameDelete={onGameDelete}/>
+            <DeleteGame game={game} onGameDelete={(e) => testDelete(e)} />
             <Link to={`/game/${game.id}`} className={"relative h-fit w-fit flex flex-col items-center"}>
                 <div
                     className={"absolute flex items-center justify-center w-full h-full z-20 opacity-0 hover:opacity-70 bg-gray-500"}>
