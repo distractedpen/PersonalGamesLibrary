@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 interface Props {
     game: LibraryGet
-    addToLibrary: (e: FormEvent) => void;
+    addToLibrary: (e: FormEvent<HTMLFormElement>) => void;
     inLibrary: boolean;
 }
 
