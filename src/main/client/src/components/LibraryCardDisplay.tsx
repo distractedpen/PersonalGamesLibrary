@@ -30,4 +30,4 @@ export default function LibraryCardDisplay({game, onGameDelete}: Props) {
             </Link>
         </div>
     );
-};
+}

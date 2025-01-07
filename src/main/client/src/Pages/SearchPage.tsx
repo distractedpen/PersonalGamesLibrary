@@ -1,4 +1,4 @@
-﻿import React, {ChangeEvent, FormEvent, SyntheticEvent, useState} from 'react'
+﻿import React, {ChangeEvent, FormEvent, useState} from 'react'
 import {searchIgdb} from "../Services/IgdbService.tsx";
 import Search from "../components/Search.tsx";
 import SearchResults from "../components/SearchResults.tsx";
@@ -33,7 +33,7 @@ const SearchPage = () => {
         setSearchText(e.target.value);
     }
 
-    async function getPreviousPage(e: SyntheticEvent) {
+    async function getPreviousPage() {
         setOffset((currOffset) => (currOffset - 10));
         const result = await searchIgdb(searchText, offset);
         if (result)
@@ -43,7 +43,7 @@ const SearchPage = () => {
 
     }
 
-    async function getNextPage(e: SyntheticEvent) {
+    async function getNextPage() {
         setOffset((currOffset) => (currOffset + 10));
         const result = await searchIgdb(searchText, offset);
         if (result)
@@ -53,7 +53,7 @@ const SearchPage = () => {
     }
 
 
-    async function handleClick(e: SyntheticEvent) {
+    async function handleClick() {
         let result = await searchIgdb(searchText, offset);
         if (result) {
             // remove all gameId == 0
@@ -73,9 +73,12 @@ const SearchPage = () => {
             toast.error("Error from Igdb Search");
     }
 
-    async function addToLibrary(e: FormEvent) {
+    async function addToLibrary(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        libraryPostApi(e.target[0].value).then((res) => {
+        const form = e.currentTarget;
+        const gameInputElement = form.elements[0] as typeof form.elements & HTMLInputElement;
+
+        libraryPostApi(Number(gameInputElement.value)).then((res) => {
             if (res?.status == 200) {
                 toast.success("Successfully added");
                 getLibrary();

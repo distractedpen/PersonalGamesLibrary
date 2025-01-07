@@ -1,4 +1,4 @@
-﻿import {SyntheticEvent} from 'react'
+﻿import {FormEvent, SyntheticEvent} from 'react'
 import ResultsTile from "./ResultsTile.tsx";
 import {LibraryGet} from "../Models/Library.ts";
 
@@ -8,7 +8,7 @@ interface Props {
     offset: number;
     getNextPage: (e: SyntheticEvent) => void;
     getPreviousPage: (e: SyntheticEvent) => void;
-    addToLibrary: (e: SyntheticEvent) => void;
+    addToLibrary: (e: FormEvent<HTMLFormElement>) => void;
 }
 
 const SearchResults = ({ gameList, currentLibrary, offset, getNextPage, getPreviousPage, addToLibrary }: Props) => {
