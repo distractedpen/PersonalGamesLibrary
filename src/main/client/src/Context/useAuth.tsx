@@ -7,7 +7,7 @@ import { registerApi , loginApi } from "../Services/AuthService.tsx"
 type UserContextType = {
     user: UserProfile | null;
     token: string | null;
-    registerUser: (email: string, username: string, password: string) => void;
+    registerUser: (username: string, password: string) => void;
     loginUser: (username: string, password: string) => void;
     logout: () => void;
     isLoggedIn: () => boolean;
@@ -35,13 +35,12 @@ export const UserProvider = ({ children }: Props) => {
         setIsReady(true);
     }, []);
 
-    const registerUser = async (email: string, username: string, password: string) => {
-        await registerApi(username, email, password).then((res) => {
+    const registerUser = async (username: string, password: string) => {
+        await registerApi(username, password).then((res) => {
             if (res) {
                 localStorage.setItem("token", res?.data.token);
                 const userObj = {
                     userName: res?.data.username,
-                    email: res?.data.email,
                 };
                 localStorage.setItem("user", JSON.stringify(userObj));
                 setToken(res?.data.token);
@@ -57,7 +56,6 @@ export const UserProvider = ({ children }: Props) => {
                 localStorage.setItem("token", res?.data.token);
                 const userObj = {
                     userName: res?.data.username,
-                    email: res?.data.email,
                 };
                 localStorage.setItem("user", JSON.stringify(userObj));
                 setToken(res?.data.token);
