@@ -52,7 +52,6 @@ public class AuthController {
         UserEntity user = new UserEntity();
         user.setUsername(registerDto.getUsername());
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        user.setEmail(registerDto.getEmail());
 
         Optional<Role> roleOptional = roleRepository.findByName("USER");
         if (roleOptional.isEmpty()) {
@@ -84,7 +83,6 @@ public class AuthController {
         AuthResponseDto authResponseDto = new AuthResponseDto();
         authResponseDto.setToken(token);
         authResponseDto.setUsername(userEntity.getUsername());
-        authResponseDto.setEmail(userEntity.getEmail());
 
         return new ResponseEntity<>(authResponseDto, HttpStatus.OK);
     }

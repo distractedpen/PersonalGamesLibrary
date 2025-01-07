@@ -1,6 +1,7 @@
 node_modules/
 /src/main/resources/static/
 /src/main/client/node/
+postgres-data
 
 HELP.md
 target/

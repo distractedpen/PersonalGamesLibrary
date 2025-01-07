@@ -17,7 +17,6 @@ public class UserEntity {
     private int id;
 
     private String username;
-    private String email;
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})

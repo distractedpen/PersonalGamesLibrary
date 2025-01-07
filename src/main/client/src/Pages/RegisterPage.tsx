@@ -6,13 +6,11 @@ import {Link} from "react-router-dom";
 
 type RegisterFormInputs = {
     userName: string;
-    email: string;
     password: string;
 };
 
 const validation = Yup.object().shape({
     userName: Yup.string().required('Username is required'),
-    email: Yup.string().required('Email is required'),
     password: Yup.string().required('Password is required'),
 });
 
@@ -21,7 +19,7 @@ export default function RegisterPage() {
     const { register, handleSubmit, formState: { errors }} = useForm<RegisterFormInputs>({ resolver: yupResolver(validation)});
 
     const handleLogin = (form: RegisterFormInputs) => {
-        registerUser(form.email, form.userName, form.password);
+        registerUser(form.userName, form.password);
     }
 
     return (
@@ -36,11 +34,6 @@ export default function RegisterPage() {
                         <input type={"text"} className={"p-1"}
                                placeholder={"Username"} {...register("userName")} />
                         {errors.userName ? <p className={"text-red-500"}>{errors.userName.message}</p> : ""}
-                    </div>
-                    <div>
-                        <input type={"text"} className={"p-1"}
-                               placeholder={"Email"} {...register("email")} />
-                        {errors.email ? <p className={"text-red-500"}>{errors.email.message}</p> : ""}
                     </div>
                     <div>
                         <input type={"password"} className={"p-1"}
