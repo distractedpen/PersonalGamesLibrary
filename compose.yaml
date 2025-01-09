@@ -1,12 +1,22 @@
 ﻿services:
+  reverse-proxy:
+    image: traefik:v3.3.1
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker"
+    ports:
+      # HTTP PORT
+      - "80:80"
+      # WEB UI
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
   postgres:
     image: postgres
     environment:
       - POSTGRES_PASSWORD=${GAMELIBRARY_DB_PASSWORD}
       - POSTGRES_USER=${GAMELIBRARY_DB_USERNAME}
       - POSTGRES_DB=${GAMELIBRARY_DB}
-    ports:
-      - "5432:5432"
     networks:
       - gamelib
     volumes:
@@ -21,8 +31,6 @@
       - IGDB_CLIENT_SECRET=${IGDB_CLIENT_SECRET}
     depends_on:
       - postgres
-    ports:
-      - "8080:8080"
     networks:
       - gamelib
 
