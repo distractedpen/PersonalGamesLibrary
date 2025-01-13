@@ -1,7 +1,7 @@
 ﻿import axios from "axios";
 import {LibraryGet} from "../Models/Library.ts";
 
-const api = "http://localhost:8080/api/";
+const api = "http://localhost:80/api/";
 
 export const searchIgdb = async (gameName: string, offset: number) => {
     const encodedGameName = encodeURIComponent(gameName);
