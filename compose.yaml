@@ -9,10 +9,12 @@
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
       - "--certificatesresolvers.myresolver.acme.email=zachnoble1993+letsencrypt@gmail.com"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
     ports:
-      # HTTP PORT
+      - "80:80"
       - "443:443"
-      # WEB UI
       - "8080:8080"
     volumes:
       - letsencrypt:/letsencrypt
