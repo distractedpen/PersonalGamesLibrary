@@ -4,12 +4,18 @@
     command:
       - "--api.insecure=true"
       - "--providers.docker"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entryPoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=zachnoble1993+letsencrypt@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
       # HTTP PORT
-      - "80:80"
+      - "443:443"
       # WEB UI
       - "8080:8080"
     volumes:
+      - letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - gamelib
@@ -36,7 +42,13 @@
     networks:
       - gamelib
     labels:
+      - "traefik.enable=true"
       - "traefik.http.routers.gamelib.rule=Host(`gamelib.cloud`)"
+      - "traefik.http.routers.gamelib.entrypoints=websecure"
+      - "traefik.http.routers.gamelib.tls.certresolver=myresolver"
+    deploy:
+      mode: replicated
+      replicas: 3
 
 networks:
   gamelib:
@@ -44,3 +56,4 @@ networks:
 
 volumes:
   postgres-data:
+  letsencrypt:
