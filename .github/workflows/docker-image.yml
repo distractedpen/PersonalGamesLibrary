@@ -1,0 +1,21 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build image
+      run: docker build . --file Dockerfile --tag ghcr.io/distractedpen/gamelib:prod
+    - name: Log in to registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password_stdin
+    - name: Push Image
+      run: docker push ghcr.io/distractedpen/gamelib:prod
