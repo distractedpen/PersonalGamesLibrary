@@ -1,4 +1,13 @@
 ﻿services:
+  watchtower:
+    image: containrrr/watchtower
+    command:
+      - "--label-enable"
+      - "--interval"
+      - "30"
+      - "--rolling-restart"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
   reverse-proxy:
     image: traefik:v3.3.1
     command:
@@ -33,7 +42,7 @@
       - ./postgres-data:/var/lib/postgresql/data
       - ./db/init.sql:/docker-entrypoint-initdb.d/create-db.sql
   gamelib:
-    build: .
+    image: ghcr.io/distractedpen/gamelib:prod
     environment:
       - GAMELIBRARY_DB_USERNAME=${GAMELIBRARY_DB_USERNAME}
       - GAMELIBRARY_DB_PASSWORD=${GAMELIBRARY_DB_PASSWORD}
