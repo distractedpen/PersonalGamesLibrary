@@ -2,7 +2,7 @@
 import { handleError } from "../Utils/ErrorHandler.tsx";
 import {UserProfileToken} from "../Models/User.ts";
 
-const api = "http://localhost:80/api/auth";
+const api = "http://localhost:8080/api/auth";
 
 export const loginApi = async (username: string, password: string) => {
     try {
