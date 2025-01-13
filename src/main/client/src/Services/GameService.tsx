@@ -1,7 +1,7 @@
 import axios from "axios";
 import {GameMetaGet, GameMetaUpdate} from "../Models/GameMeta.ts";
 
-const apiUrl = "http://localhost:8080/api/";
+const apiUrl = "http://localhost:80/api/";
 
 export async function getGameMetadataById(game_id: number) {
     return await axios.get<GameMetaGet>(apiUrl + `games/meta?gameId=${game_id}`, {});
