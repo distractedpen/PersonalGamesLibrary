@@ -1,7 +1,7 @@
 ﻿import axios from "axios";
 import {LibraryGet, LibraryPost} from "../Models/Library.ts";
 
-const api = "http://localhost:8080/api/library";
+const api = "http://localhost:80/api/library";
 
 export async function libraryGetApi()  {
     try {
